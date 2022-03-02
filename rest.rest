@@ -10,8 +10,8 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "username": "Mike",
-  "password": "secret"
+  "username": "Jill",
+  "password": "jill456"
 }
 ###
 
@@ -20,5 +20,5 @@ Content-Type: application/json
 
 {
   "username": "Jill",
-  "password": "jill123"
+  "password": "jill456"
 }
