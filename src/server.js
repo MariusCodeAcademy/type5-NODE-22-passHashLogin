@@ -48,4 +48,15 @@ app.post('/login', (req, res) => {
   }
 });
 
+app.post('/register', (req, res) => {
+  // gauti uName ir pass su kuriai bandoma PRISIREGISTRUOT
+  const { username, password } = req.body;
+  const newUser = {
+    username,
+    password,
+  };
+  users.push(newUser);
+  res.send('register success');
+});
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
