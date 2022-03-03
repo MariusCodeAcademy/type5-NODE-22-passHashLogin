@@ -10,8 +10,8 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-  "username": "Jill",
-  "password": "jill456"
+  "username": "Jisdsdsd",
+  "password": ""
 }
 
 ###
@@ -20,6 +20,17 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "username": "Jill",
+  "username": "Ji",
   "password": "jill456"
+}
+###
+
+POST http://localhost:3000/validate
+Content-Type: application/json
+
+{
+  "email":"james@james.com",
+  "town":"Kaunas",
+  "age":28,
+  "gender":"male"
 }
