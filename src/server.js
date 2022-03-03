@@ -4,6 +4,7 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const { validateUser } = require('./middleware');
+const { addUserDb, findUserByUsername } = require('./model/userModel');
 
 const PORT = process.env.SERVER_PORT || 3000;
 
@@ -56,12 +57,14 @@ app.post('/login', validateUser, async (req, res) => {
   const { username, password } = req.body;
 
   // surasti vartotoja vardu username
-  const userObjFound = users.find((usrObj) => usrObj.username === username);
+  const usersArray = await findUserByUsername(username);
+  const userObjFound = usersArray[0];
   // jei randam ziurim ar slaptazodziai sutampa// tikrinti slaptazodzius
   // verify password
   // if (bcrypt.compareSync(password, userObjFound.password)) {
   //   console.log('sutampa');
   // }
+  console.log('userObjFound ===', userObjFound);
   //                                     "jill456", '' uzkuotuoda pass reiksme'
   if (userObjFound && bcrypt.compareSync(password, userObjFound.password)) {
     res.json('login success');
@@ -73,15 +76,18 @@ app.post('/login', validateUser, async (req, res) => {
 app.post('/register', validateUser, async (req, res) => {
   // gauti uName ir pass su kuriai bandoma PRISIREGISTRUOT
   const { username, password } = req.body;
-
   const passHash = bcrypt.hashSync(password, 10);
   // console.log('passHash ===', passHash);
   const newUser = {
     username,
     password: passHash,
   };
-  users.push(newUser);
-  res.json(passHash);
+  const addResult = await addUserDb(newUser);
+  if (addResult === false) {
+    res.status(500);
+    return;
+  }
+  res.json(addResult);
 });
 
 const schema = Joi.object({
