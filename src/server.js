@@ -94,10 +94,21 @@ app.post('/register', validateUser, async (req, res) => {
   };
   const addResult = await addUserDb(newUser);
   if (addResult === false) {
-    res.status(500);
+    const respond = {
+      success: false,
+      errors: [
+        {
+          message: 'Something went wrong, try again later',
+        },
+      ],
+    };
+    res.status(500).json(respond);
     return;
   }
-  res.json(addResult);
+  // pakeisti kad butu atsakymas vartotojui su success
+  res.json({
+    success: true,
+  });
 });
 
 const schema = Joi.object({

@@ -9,7 +9,9 @@
     "eslint-plugin-import": "^2.24.2"
   },
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "lfbe": "eslint src --fix",
+    "lffe": "eslint public --fix"
   },
   "repository": {
     "type": "git",
