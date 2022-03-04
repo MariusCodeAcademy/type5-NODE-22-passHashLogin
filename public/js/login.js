@@ -35,12 +35,17 @@ async function loginUser(loginUserData) {
   if (respInJs.success === false) {
     handleErrors(respInJs.errors);
   }
+  if (respInJs.success === true) {
+    // nunaviguoti i profile puslapi
+    // redirect to page in js  profile.html
+    window.location.replace('profile.html');
+  }
 }
 
 function handleErrors(erorrArray) {
   errorsContainerEl.innerHTML = '';
   console.log('erorrArray ===', erorrArray);
   erorrArray.forEach((err) => {
-    errorsContainerEl.innerHTML += ` <p>${err.message}</p>`;
+    errorsContainerEl.innerHTML += `<p>${err.message}</p>`;
   });
 }

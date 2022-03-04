@@ -67,9 +67,19 @@ app.post('/login', validateUser, async (req, res) => {
   console.log('userObjFound ===', userObjFound);
   //                                     "jill456", '' uzkuotuoda pass reiksme'
   if (userObjFound && bcrypt.compareSync(password, userObjFound.password)) {
-    res.json('login success');
+    res.json({
+      success: true,
+      msg: 'login success',
+    });
   } else {
-    res.status(400).send('username or password not match');
+    res.status(400).json({
+      success: false,
+      errors: [
+        {
+          message: 'password or username do not match',
+        },
+      ],
+    });
   }
 });
 
