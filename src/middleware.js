@@ -16,7 +16,11 @@ async function validateUser(req, res, next) {
       field: detail.context.key,
       message: detail.message,
     }));
-    res.status(400).json(formatedError);
+    const resposnseToSend = {
+      success: false,
+      errors: formatedError,
+    };
+    res.status(400).json(resposnseToSend);
   }
 }
 

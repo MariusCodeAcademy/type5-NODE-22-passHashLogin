@@ -1,6 +1,7 @@
 console.log('login');
 const BASE_URL = 'http://localhost:3000';
 const formEl = document.forms.login;
+const errorsContainerEl = document.querySelector('.errors');
 
 // sustabdyti formos nustatytahi siuntima ir perkrovima
 formEl.addEventListener('submit', (event) => {
@@ -31,4 +32,15 @@ async function loginUser(loginUserData) {
   // pasiverciam gauta atsakyma i js objekta ar masyva ar stringa
   const respInJs = await resp.json();
   console.log('respInJs ===', respInJs);
+  if (respInJs.success === false) {
+    handleErrors(respInJs.errors);
+  }
+}
+
+function handleErrors(erorrArray) {
+  errorsContainerEl.innerHTML = '';
+  console.log('erorrArray ===', erorrArray);
+  erorrArray.forEach((err) => {
+    errorsContainerEl.innerHTML += ` <p>${err.message}</p>`;
+  });
 }
