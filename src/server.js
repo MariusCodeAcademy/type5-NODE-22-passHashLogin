@@ -144,6 +144,10 @@ app.post('/validate', async (req, res) => {
   // console.log(JSON.stringify(newUser));
   res.json(newUser);
 });
+
+app.all('*', (req, res) => {
+  res.status(404).json('Page not found, please try homepage');
+});
 // POST /validate (atsiusti situo adresu objekta)
 
 // atsakyti su gautu objektu
