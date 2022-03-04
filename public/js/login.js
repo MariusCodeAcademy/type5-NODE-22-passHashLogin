@@ -3,6 +3,14 @@ const BASE_URL = 'http://localhost:3000';
 const formEl = document.forms.login;
 const errorsContainerEl = document.querySelector('.errors');
 
+// pasitikrinti ar yra query parametras username. jei yra tai irasyti ji i formos input
+const query = window.location.search;
+if (query) {
+  // console.log('query ===', query);
+  const usernameFromQuery = query.split('=')[1];
+  formEl.elements.username.value = usernameFromQuery;
+}
+
 // sustabdyti formos nustatytahi siuntima ir perkrovima
 formEl.addEventListener('submit', (event) => {
   event.preventDefault();
