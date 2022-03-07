@@ -17,7 +17,9 @@ postsRoutes.get('/', async (req, res) => {
   });
 });
 
+// GET /posts/cat/:cat_id
+
 // DELETE /posts/:postId
-//:postId
+// :postId
 
 module.exports = postsRoutes;

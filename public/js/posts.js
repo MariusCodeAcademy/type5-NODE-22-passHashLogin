@@ -20,7 +20,7 @@ async function getPostsFe() {
 function renderPosts(postsArray, dest) {
   dest.innerHTML = '';
   console.log('postsArray ===', postsArray);
-  let newPostsArrayString = postsArray
+  const newPostsArrayString = postsArray
     .map(
       (post) => `
     <div data-id='${post.post_id}' class="card">

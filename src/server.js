@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const { validateUser, printBody } = require('./middleware');
 const { addUserDb, findUserByUsername } = require('./model/userModel');
 const postsRoutes = require('./routes/postsRoutes');
+const catRoutes = require('./routes/catRoutes');
 
 const PORT = process.env.SERVER_PORT || 3000;
 
@@ -102,6 +103,7 @@ app.post('/register', validateUser, async (req, res) => {
 });
 
 app.use('/posts/', postsRoutes);
+app.use('/categories/', catRoutes);
 
 app.all('*', (req, res) => {
   res.status(404).json('Page not found, please try homepage');
