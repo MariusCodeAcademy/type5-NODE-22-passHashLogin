@@ -17,4 +17,7 @@ postsRoutes.get('/', async (req, res) => {
   });
 });
 
+// DELETE /posts/:postId
+//:postId
+
 module.exports = postsRoutes;

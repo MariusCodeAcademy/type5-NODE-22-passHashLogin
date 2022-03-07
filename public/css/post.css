@@ -10,4 +10,5 @@
   border-radius: 8px;
   box-shadow: 5px 5px 10px lightblue;
   flex-basis: 25%;
+  flex-grow: 1;
 }
