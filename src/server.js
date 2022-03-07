@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
-const { validateUser } = require('./middleware');
+const { validateUser, printBody } = require('./middleware');
 const { addUserDb, findUserByUsername } = require('./model/userModel');
 
 const PORT = process.env.SERVER_PORT || 3000;
@@ -29,17 +29,6 @@ app.use(cors());
 app.use(express.json());
 app.use(printBody);
 
-// musu pirma middleWare funkcija
-function printBody(req, res, next) {
-  // ['POST', 'PUT', 'PATCH'];
-  // if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
-  if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
-    console.log('Request body we got:', req.body);
-  }
-
-  // next - viskas gerai perduodam koda vykdyti toliau
-  next();
-}
 // sayHi - middleware tik siam routui
 app.get('/users', (req, res) => {
   res.json(users);

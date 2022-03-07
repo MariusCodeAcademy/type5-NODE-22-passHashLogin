@@ -3,8 +3,7 @@ const Joi = require('joi');
 async function validateUser(req, res, next) {
   // validation
   const schema = Joi.object({
-    username: Joi.string().min(3).max(30).alphanum()
-      .required(),
+    username: Joi.string().min(3).max(30).alphanum().required(),
     password: Joi.string().min(5).max(30).required(),
   });
   // username min3 max 30 skaiciai ir raides privalomas laukas
@@ -24,7 +23,19 @@ async function validateUser(req, res, next) {
     res.status(400).json(resposnseToSend);
   }
 }
+// musu pirma middleWare funkcija
+function printBody(req, res, next) {
+  // ['POST', 'PUT', 'PATCH'];
+  // if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+  if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
+    console.log('Request body we got:', req.body);
+  }
+
+  // next - viskas gerai perduodam koda vykdyti toliau
+  next();
+}
 
 module.exports = {
   validateUser,
+  printBody,
 };
