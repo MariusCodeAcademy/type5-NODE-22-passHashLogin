@@ -2,9 +2,10 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
-const Joi = require('joi');
+
 const { validateUser, printBody } = require('./middleware');
 const { addUserDb, findUserByUsername } = require('./model/userModel');
+const postsRoutes = require('./routes/postsRoutes');
 
 const PORT = process.env.SERVER_PORT || 3000;
 
@@ -100,39 +101,7 @@ app.post('/register', validateUser, async (req, res) => {
   });
 });
 
-const schema = Joi.object({
-  email: Joi.string().email().required(),
-  town: Joi.string().pattern(new RegExp('[a-zA-Z]$')).required(),
-  age: Joi.number().min(18).max(200).required(),
-  gender: Joi.string().valid('male', 'female', 'other').required(),
-});
-
-app.post('/validate', async (req, res) => {
-  const newUser = req.body;
-  // validate input
-  // abortEarly - jei lygu true tai radusi pirma klaida toliau nebetikrina
-  try {
-    await schema.validateAsync(newUser, { abortEarly: false });
-  } catch (error) {
-    console.log('klaida validuojant');
-    console.log('error ===', error);
-
-    res.status(400).json({
-      error: 'Please check inputs',
-      errors: error.details.map((dtl) => dtl.message),
-    });
-    return;
-  }
-
-  // const newUser = {
-  //   email: 'james@james', // valid email, required
-  //   town: 'Kaunas', // min 4,  max 30 , tik raides, required
-  //   age: 25, // min 18 max 200, number, required
-  //   gender: 'male', // galimi tik 2 varijantai 'male', 'female'
-  // };
-  // console.log(JSON.stringify(newUser));
-  res.json(newUser);
-});
+app.use('/posts/', postsRoutes);
 
 app.all('*', (req, res) => {
   res.status(404).json('Page not found, please try homepage');
