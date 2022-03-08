@@ -62,8 +62,8 @@ app.post('/login', validateUser, async (req, res) => {
   if (userObjFound && bcrypt.compareSync(password, userObjFound.password)) {
     // JWT TOKEN
     const loggedInUserObj = { username };
-    const token = jwt.sign(loggedInUserObj, jwtSecret);
-    console.log('token ===', token);
+    const token = jwt.sign(loggedInUserObj, jwtSecret, { expiresIn: '1h' });
+    // console.log('token ===', token);
     res.json({
       success: true,
       msg: 'login success',

@@ -45,8 +45,10 @@ async function loginUser(loginUserData) {
   }
   if (respInJs.success === true) {
     // nunaviguoti i profile puslapi
+    // save token
+    console.log('respInJs ===', respInJs);
     // redirect to page in js  profile.html
-    window.location.replace('profile.html');
+    // window.location.replace('profile.html');
   }
 }
 
