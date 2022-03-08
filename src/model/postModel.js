@@ -19,6 +19,25 @@ async function getAllPostsWCategories() {
     return false;
   }
 }
+async function insertNewPost(title, body, category_id) {
+  try {
+    const conn = await mysql.createConnection(dbConfig);
+    const sql = `
+    INSERT INTO posts (title, body, category_id) 
+    VALUES (?, ?, ?)
+    `;
+    const [insertResult] = await conn.execute(sql, [title, body, category_id]);
+    await conn.close();
+    return insertResult;
+  } catch (error) {
+    console.log('insertNewPost', error);
+    return false;
+  }
+}
+
+// insert new post model
+
 module.exports = {
   getAllPostsWCategories,
+  insertNewPost,
 };
