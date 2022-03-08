@@ -29,7 +29,10 @@ postsRoutes.post('/', async (req, res) => {
     return;
   }
   // console.log('insertResult ===', insertResult);
-  res.json('Post created');
+  res.json({
+    success: true,
+    msg: 'post created',
+  });
 });
 
 // GET /posts/cat/:cat_id

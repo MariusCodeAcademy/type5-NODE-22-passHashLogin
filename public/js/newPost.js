@@ -46,8 +46,38 @@ formEl.addEventListener('submit', (e) => {
   // siusiuti juos su fettch i naujo posto sukurima
 });
 
-function createNewPost(newPostObj) {
+async function createNewPost(newPostObj) {
   // fetch /posts metodas POST
+  const resp = await fetch(`${URL}/posts`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(newPostObj),
+  });
+  const dataInJs = await resp.json();
+  console.log('dataInJs ===', dataInJs);
+  if (dataInJs.success === true) {
+    handleSuccess();
+  } else {
+    handleError();
+  }
 }
+
+function handleSuccess() {
+  //<h4 class="alert">Sveikiname postas sukurtas</h4>
+  const alertEl = document.createElement('h4');
+  alertEl.className = 'alert';
+  alertEl.textContent = 'Sveikiname postas sukurtas';
+  // ideti i dom
+  document.body.prepend(alertEl);
+  setTimeout(() => {
+    alertEl.remove();
+  }, 3000);
+  // pasalinti formoje ivestus duomenis
+  formEl.reset();
+}
+
+function handleError() {}
 
 getCategories();
