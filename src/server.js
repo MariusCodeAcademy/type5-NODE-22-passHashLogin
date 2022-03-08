@@ -58,6 +58,7 @@ app.post('/login', validateUser, async (req, res) => {
   console.log('userObjFound ===', userObjFound);
   //                                     "jill456", '' uzkuotuoda pass reiksme'
   if (userObjFound && bcrypt.compareSync(password, userObjFound.password)) {
+    // JWT TOKEN
     res.json({
       success: true,
       msg: 'login success',

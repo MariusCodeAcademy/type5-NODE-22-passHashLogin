@@ -1,4 +1,5 @@
 const express = require('express');
+const { validatePost } = require('../middleware');
 const { getAllPostsWCategories, insertNewPost } = require('../model/postModel');
 
 const postsRoutes = express.Router();
@@ -17,7 +18,7 @@ postsRoutes.get('/', async (req, res) => {
   });
 });
 
-postsRoutes.post('/', async (req, res) => {
+postsRoutes.post('/', validatePost, async (req, res) => {
   const { title, body, category_id } = req.body;
   const insertResult = await insertNewPost(title, body, category_id);
   if (insertResult === false) {
