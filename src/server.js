@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const { validateUser, printBody } = require('./middleware');
 const { addUserDb, findUserByUsername } = require('./model/userModel');
@@ -9,7 +10,8 @@ const postsRoutes = require('./routes/postsRoutes');
 const catRoutes = require('./routes/catRoutes');
 
 const PORT = process.env.SERVER_PORT || 3000;
-
+const jwtSecret = process.env.JWT_TOKEN_SECRET;
+// console.log('jwtSecret ===', jwtSecret);
 const app = express();
 
 const users = [
@@ -59,9 +61,13 @@ app.post('/login', validateUser, async (req, res) => {
   //                                     "jill456", '' uzkuotuoda pass reiksme'
   if (userObjFound && bcrypt.compareSync(password, userObjFound.password)) {
     // JWT TOKEN
+    const loggedInUserObj = { username };
+    const token = jwt.sign(loggedInUserObj, jwtSecret);
+    console.log('token ===', token);
     res.json({
       success: true,
       msg: 'login success',
+      token,
     });
   } else {
     res.status(400).json({
