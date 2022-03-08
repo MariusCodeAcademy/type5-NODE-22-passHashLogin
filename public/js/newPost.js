@@ -48,10 +48,15 @@ formEl.addEventListener('submit', (e) => {
 
 async function createNewPost(newPostObj) {
   // fetch /posts metodas POST
+  const token = localStorage.getItem('login_token');
+  // jei nera token nutraukiam veikla
+  if (token === null) throw new Error('token not found');
+
   const resp = await fetch(`${URL}/posts`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(newPostObj),
   });

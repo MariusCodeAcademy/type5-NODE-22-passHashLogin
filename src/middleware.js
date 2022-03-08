@@ -1,4 +1,6 @@
+require('dotenv').config();
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 
 async function validatePost(req, res, next) {
   // validation
@@ -59,8 +61,30 @@ function printBody(req, res, next) {
   next();
 }
 
+function validateToken(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const tokenGotFromUser = authHeader && authHeader.split(' ')[1];
+  // console.log('tokenGotFromUser ===', tokenGotFromUser);
+  if (!tokenGotFromUser) return res.status(401).json('no token');
+  // patikrinti ar token geras
+  // jwt.verify(tokne to check, secret, callback fh);
+  jwt.verify(
+    tokenGotFromUser,
+    process.env.JWT_TOKEN_SECRET,
+    (err, tokenPayload) => {
+      /// token negaliojantis arba netinkamas
+      if (err) return res.status(403).json('token not valid');
+      // jei reikia pernesti info apie token (token esancia info)
+      // console.log('user ===', user);
+      req.username = tokenPayload.username;
+      next();
+    },
+  );
+}
+
 module.exports = {
   validateUser,
   printBody,
   validatePost,
+  validateToken,
 };

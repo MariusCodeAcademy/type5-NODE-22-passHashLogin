@@ -1,5 +1,5 @@
 const express = require('express');
-const { validatePost } = require('../middleware');
+const { validatePost, validateToken } = require('../middleware');
 const { getAllPostsWCategories, insertNewPost } = require('../model/postModel');
 
 const postsRoutes = express.Router();
@@ -18,8 +18,11 @@ postsRoutes.get('/', async (req, res) => {
   });
 });
 
-postsRoutes.post('/', validatePost, async (req, res) => {
+postsRoutes.post('/', validateToken, validatePost, async (req, res) => {
   const { title, body, category_id } = req.body;
+  // validateToken prideta reiksme
+  // const username = req.username;
+  // console.log('username ===', username);
   const insertResult = await insertNewPost(title, body, category_id);
   if (insertResult === false) {
     res.status(500);

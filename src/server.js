@@ -32,6 +32,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(printBody);
+// app.use(validateToken);
 
 // sayHi - middleware tik siam routui
 app.get('/users', (req, res) => {

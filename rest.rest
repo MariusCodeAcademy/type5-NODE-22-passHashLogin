@@ -10,10 +10,11 @@ GET http://localhost:3000/posts
 
 POST http://localhost:3000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkJhYmEiLCJpYXQiOjE2NDY3NDYwMTksImV4cCI6MTY0Njc0OTYxOX0.s3rCWiQSE_ag7WftGtCFc9GPN7BZfnjyWYWV-eL4BuE
 
 {
-  "title": "Post 17",
-  "body": "Body of post 17",
+  "title": "Post 33",
+  "body": "Body of post 33",
   "category_id": 3
 }
 
