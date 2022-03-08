@@ -47,8 +47,9 @@ async function loginUser(loginUserData) {
     // nunaviguoti i profile puslapi
     // save token
     console.log('respInJs ===', respInJs);
+    localStorage.setItem('login_token', respInJs.token);
     // redirect to page in js  profile.html
-    // window.location.replace('profile.html');
+    window.location.replace('new-post.html');
   }
 }
 
